@@ -1,4 +1,4 @@
-package com.prvprojects.algorithmsanddatastructures_learnbydemo;
+package com.prvprojects.algodsapp;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
