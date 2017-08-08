@@ -35,11 +35,18 @@ public class LinkedList {
     public static void main(String args[]){
 
         // Creating a linked list
-        Node fifthNode = new Node(92);
-        Node fourthNode = new Node(87, fifthNode);
+        Node fifthNode = new Node(10);
+        Node fourthNode = new Node(9, fifthNode);
         Node thirdNode = new Node(8, fourthNode);
-        Node secondNode = new Node(45, thirdNode);
-        Node headNode = new Node(32, secondNode);
+        Node secondNode = new Node(7, thirdNode);
+        Node headNode = new Node(6, secondNode);
+
+        // Creating a linked list
+        Node fifthNode2 = new Node(5);
+        Node fourthNode2 = new Node(4, fifthNode2);
+        Node thirdNode2 = new Node(3, fourthNode2);
+        Node secondNode2 = new Node(2, thirdNode2);
+        Node headNode2 = new Node(1, secondNode2);
 
         /*
         // Another way of creating a linked list
@@ -55,6 +62,7 @@ public class LinkedList {
         //invokeDeletionMethods(headNode);
 
         LinkedList linkedList = new LinkedList(headNode);
+        LinkedList linkedList2 = new LinkedList(headNode2);
 
 //        Node node1 = secondNode;
 //        Node node2 = headNode;
@@ -69,9 +77,12 @@ public class LinkedList {
 //        linkedList.swapNodes(position1, position2);
 //        linkedList.printLinkedList("AFTER SWAP "+position1+" and "+position2);
 
-        linkedList.printLinkedList("Before REVERSE");
-        linkedList.reverse();
-        linkedList.printLinkedList("After REVERSE");
+//        linkedList.printLinkedList("Before REVERSE");
+//        linkedList.reverse();
+//        linkedList.printLinkedList("After REVERSE");
+
+        sortedMerge(headNode, headNode2).printLinkedList("After SORTED MERGE - LIST");
+
 
 
     }
@@ -550,6 +561,83 @@ public class LinkedList {
         }
 
         head = prev;
+
+    }
+
+    /**
+     * Merge two linked lists which are already sorted
+     * @param head1
+     * @param head2
+     */
+    public static LinkedList sortedMerge(Node head1, Node head2){
+
+        // A: 1 -> 2 -> 4 ->4
+
+        // B: 0 -> 3 -> 5 ->100
+
+        if(head1 == null && head2 == null) {
+
+            LOGGER.info("Both lists are empty.");
+            return null;
+
+        }
+
+        Node curr1 = head1;
+        Node curr2 = head2;
+        Node currNewList = null;
+        Node newListHead = null;
+
+        while(curr1!=null && curr2!=null) {
+
+            Node newNode = null;
+            // Used only when both nodes being compared have same data value
+            Node newNode2 = null;
+            if(curr1==null && curr2!=null) {
+
+                newNode = new Node(curr2.data);
+                curr2 = curr2.next;
+
+            } else if(curr1!=null && curr2==null) {
+
+                newNode = new Node(curr1.data);
+                curr1 = curr1.next;
+
+            } else {
+
+                if(curr1.data < curr2.data) {
+
+                    newNode = new Node(curr1.data);
+                    curr1 = curr1.next;
+
+                } else if(curr2.data < curr1.data) {
+
+                    newNode = new Node(curr2.data);
+                    curr2 = curr2.next;
+
+                } else {
+
+                    newNode = new Node(curr1.data);
+                    newNode.next = new Node(curr2.data);
+                    curr1 = curr1.next;
+                    curr2 = curr2.next;
+
+                }
+
+            }
+
+            if(newListHead==null) {
+                newListHead = newNode;
+                currNewList = newListHead;
+            } else {
+                currNewList.next = newNode;
+                currNewList = currNewList.next;
+                if(currNewList.next!=null)
+                    currNewList = currNewList.next;
+            }
+
+        }
+
+        return new LinkedList(newListHead);
 
     }
 
