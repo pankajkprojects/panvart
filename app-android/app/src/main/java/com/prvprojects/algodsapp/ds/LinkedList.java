@@ -763,4 +763,17 @@ public class LinkedList {
 
     }
 
+    /**
+     * Reverse subset of linked list with given subset size
+     * e.g.
+     * i/p - 1, 2, 3, 4, 5, 6, 7, 8, 9 with subset size 3
+     * o/p - 3, 2, 1, 6, 5, 4, 9, 8, 7
+     * @param subsetSize
+     */
+    public void reverse(int subsetSize) {
+
+
+
+    }
+
 }
