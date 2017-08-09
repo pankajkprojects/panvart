@@ -38,12 +38,12 @@ public class LinkedList {
         Node fifthNode = new Node(10);
         Node fourthNode = new Node(9, fifthNode);
         Node thirdNode = new Node(8, fourthNode);
-        Node secondNode = new Node(7, thirdNode);
-        Node headNode = new Node(6, secondNode);
+        Node secondNode = new Node(5, thirdNode);
+        Node headNode = new Node(4, secondNode);
 
         // Creating a linked list
-        Node fifthNode2 = new Node(5);
-        Node fourthNode2 = new Node(4, fifthNode2);
+        Node fifthNode2 = new Node(9);
+        Node fourthNode2 = new Node(6, fifthNode2);
         Node thirdNode2 = new Node(3, fourthNode2);
         Node secondNode2 = new Node(2, thirdNode2);
         Node headNode2 = new Node(1, secondNode2);
@@ -70,8 +70,8 @@ public class LinkedList {
 //        linkedList.swapNodes(node1, node2);
 //        linkedList.printLinkedList("AFTER SWAP "+node1.data+" and "+node2.data);
 
-        int position1 = 1;
-        int position2 = 3;
+//        int position1 = 1;
+//        int position2 = 3;
 
 //        linkedList.printLinkedList("BEFORE SWAP "+position1+" and "+position2);
 //        linkedList.swapNodes(position1, position2);
@@ -81,9 +81,9 @@ public class LinkedList {
 //        linkedList.reverse();
 //        linkedList.printLinkedList("After REVERSE");
 
-        sortedMerge(headNode, headNode2).printLinkedList("After SORTED MERGE - LIST");
+        //sortedMerge(headNode, headNode2).printLinkedList("After SORTED MERGE - LIST");
 
-
+        runMergeSortSample();
 
     }
 
@@ -565,6 +565,35 @@ public class LinkedList {
     }
 
     /**
+     * Merge two sorted linked lists in ascending order
+     * @param node1
+     * @param node2
+     * @return
+     */
+    public static Node sortedMerge_Recursive(Node node1, Node node2) {
+
+        Node result = null;
+        /* Base cases */
+        if (node1 == null)
+            return node2;
+        if (node2 == null)
+            return node1;
+
+        /* Pick either a or b, and recur */
+        if (node1.data <= node2.data) {
+            result = node1;
+            result.next = sortedMerge_Recursive(node1.next, node2);
+        }
+
+        else {
+            result = node2;
+            result.next = sortedMerge_Recursive(node1, node2.next);
+        }
+        return result;
+
+    }
+
+    /**
      * Merge two linked lists which are already sorted
      * @param head1
      * @param head2
@@ -587,11 +616,10 @@ public class LinkedList {
         Node currNewList = null;
         Node newListHead = null;
 
-        while(curr1!=null && curr2!=null) {
+        while(curr1!=null || curr2!=null) {
 
-            Node newNode = null;
-            // Used only when both nodes being compared have same data value
-            Node newNode2 = null;
+            Node newNode;
+
             if(curr1==null && curr2!=null) {
 
                 newNode = new Node(curr2.data);
@@ -609,7 +637,7 @@ public class LinkedList {
                     newNode = new Node(curr1.data);
                     curr1 = curr1.next;
 
-                } else if(curr2.data < curr1.data) {
+                } else if(curr1.data > curr2.data) {
 
                     newNode = new Node(curr2.data);
                     curr2 = curr2.next;
@@ -638,6 +666,100 @@ public class LinkedList {
         }
 
         return new LinkedList(newListHead);
+
+    }
+
+    public static void runMergeSortSample(){
+
+        LinkedList linkedList = new LinkedList(new Node(9));
+        linkedList.push(8);
+        linkedList.push(7);
+        linkedList.push(6);
+        linkedList.push(5);
+        linkedList.push(4);
+        linkedList.push(3);
+        linkedList.push(2);
+        linkedList.push(1);
+
+        linkedList.printLinkedList("BEFORE MERGE SORT");
+        linkedList.mergeSort();
+    }
+
+    /**
+     * Sorts the current Linked List using Merge Sort
+     *
+     * 1. Split the linked list in two halves with middle Node as pivot point
+     */
+    public void mergeSort(){
+
+        printLinkedList("BEFORE MERGE SORT");
+        LinkedList sortedList = new LinkedList(mergeSort(head));
+        sortedList.printLinkedList("AFTER MERGE SORT");
+
+    }
+
+    /**
+     * This method is used to split linked list using middle node as split point and merging the single nodes into new list
+     * @param head
+     * @return
+     */
+    private static Node mergeSort(Node head){
+
+        if(head==null || head.next==null)
+            return head;
+
+        Node midNode = getMiddleNodeOfLinkedList(head);
+
+        Node leftHead = head;
+        Node rightHead = midNode.next;
+        midNode.next = null;
+
+        Node leftSortedList = mergeSort(leftHead);
+        Node rightSortedList = mergeSort(rightHead);
+
+        LinkedList temp = sortedMerge(leftSortedList, rightSortedList);
+
+        return temp==null?null:temp.head;
+
+    }
+
+    /**
+     * Returns the middle node of linked list
+     * @return
+     */
+    private static Node getMiddleNodeOfLinkedList(Node head){
+
+        if(head==null) {
+            LOGGER.info("Linked list is empty");
+            return null;
+        }
+
+        if(head.next==null) {
+            LOGGER.info("Linked list has only one item");
+            return head;
+        }
+
+//        if(head.next.next==null) {
+//            LOGGER.info("Linked list has only two items. Returning first one as middle");
+//            return head.next;
+//        }
+
+        // (HEAD)A -> B -> C -> D -> E -> F
+
+        Node fastNode = head.next;
+        Node slowNode = head;
+
+        while(fastNode!=null) {
+            fastNode = fastNode.next;
+            if(fastNode!=null) {
+                slowNode = slowNode.next;
+                fastNode = fastNode.next;
+            };
+        }
+
+        LOGGER.info("Middle NODE DATA: "+slowNode.data);
+
+        return slowNode;
 
     }
 
