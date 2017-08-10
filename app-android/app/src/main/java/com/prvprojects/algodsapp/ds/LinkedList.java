@@ -42,6 +42,8 @@ public class LinkedList {
 
         //runReverseMethods();
 
+        runRemoveLoopMethods();
+
     }
 
     /**
@@ -141,6 +143,144 @@ public class LinkedList {
 
     }
 
+
+    /**
+     * Method to create linked list and call remove loop methods
+     * DOESNT WORK ON CYCLIC LINKED LIST
+     */
+    public static void runRemoveLoopMethods(){
+
+        Node loopStart = new Node(67);
+        Node loopMerge = new Node(5);
+
+        //<editor-fold desc="Linked List ends with a loop">
+//        LinkedList linkedList_LoopSmallerThanNonLoopList = new LinkedList(loopMerge);
+//        linkedList_LoopSmallerThanNonLoopList.push(12);
+//        linkedList_LoopSmallerThanNonLoopList.push(11);
+//        linkedList_LoopSmallerThanNonLoopList.push(10);
+//        linkedList_LoopSmallerThanNonLoopList.push(41);
+//        linkedList_LoopSmallerThanNonLoopList.push(42);
+//        linkedList_LoopSmallerThanNonLoopList.push(9);
+//        linkedList_LoopSmallerThanNonLoopList.push(8);
+//        linkedList_LoopSmallerThanNonLoopList.push(7);
+//        linkedList_LoopSmallerThanNonLoopList.push(6);
+//        linkedList_LoopSmallerThanNonLoopList.push(loopStart);
+//        linkedList_LoopSmallerThanNonLoopList.push(4);
+//        linkedList_LoopSmallerThanNonLoopList.push(3);
+//        linkedList_LoopSmallerThanNonLoopList.push(2);
+//        linkedList_LoopSmallerThanNonLoopList.push(52);
+//        linkedList_LoopSmallerThanNonLoopList.push(53);
+//        linkedList_LoopSmallerThanNonLoopList.push(1);
+//        loopMerge.next = loopStart;
+//
+//        // Cant use it because it will cause JVM heap memory issue
+//        //linkedList_LoopSmallerThanNonLoopList.printlinkedList_LoopSmallerThanNonLoopList("BEFORE REMOVING LOOP");
+//        linkedList_LoopSmallerThanNonLoopList.removeLoop();
+//        linkedList_LoopSmallerThanNonLoopList.printLinkedList("AFTER REMOVING LOOP");
+//
+//
+//        LinkedList linkedList_LoopLargerThanNonLoopList = new LinkedList(loopMerge);
+//        linkedList_LoopLargerThanNonLoopList.push(12);
+//        linkedList_LoopLargerThanNonLoopList.push(11);
+//        linkedList_LoopLargerThanNonLoopList.push(loopStart);
+//        linkedList_LoopLargerThanNonLoopList.push(10);
+//        linkedList_LoopLargerThanNonLoopList.push(41);
+//        linkedList_LoopLargerThanNonLoopList.push(42);
+//        linkedList_LoopLargerThanNonLoopList.push(9);
+//        linkedList_LoopLargerThanNonLoopList.push(8);
+//        linkedList_LoopLargerThanNonLoopList.push(7);
+//        linkedList_LoopLargerThanNonLoopList.push(6);
+//        linkedList_LoopLargerThanNonLoopList.push(4);
+//        linkedList_LoopLargerThanNonLoopList.push(3);
+//        linkedList_LoopLargerThanNonLoopList.push(2);
+//        linkedList_LoopLargerThanNonLoopList.push(52);
+//        linkedList_LoopLargerThanNonLoopList.push(53);
+//        linkedList_LoopLargerThanNonLoopList.push(1);
+//        loopMerge.next = loopStart;
+//
+//        // Cant use it because it will cause JVM heap memory issue
+//        //linkedList_LoopLargerThanNonLoopList.printlinkedList("BEFORE REMOVING LOOP");
+//        linkedList_LoopLargerThanNonLoopList.removeLoop();
+//        linkedList_LoopLargerThanNonLoopList.printLinkedList("AFTER REMOVING LOOP");
+        //</editor-fold>
+
+        // DOESNT WORK FOR A CYCLIC LINKED LIST
+
+        //<editor-fold desc="Linked List starts with a loop i.e. is a loop">
+        LinkedList linkedList_LoopSmallerThanNonLoopList = new LinkedList(loopMerge);
+        linkedList_LoopSmallerThanNonLoopList.push(12);
+        linkedList_LoopSmallerThanNonLoopList.push(11);
+        linkedList_LoopSmallerThanNonLoopList.push(10);
+        linkedList_LoopSmallerThanNonLoopList.push(41);
+        linkedList_LoopSmallerThanNonLoopList.push(42);
+        linkedList_LoopSmallerThanNonLoopList.push(9);
+        linkedList_LoopSmallerThanNonLoopList.push(8);
+        linkedList_LoopSmallerThanNonLoopList.push(7);
+        linkedList_LoopSmallerThanNonLoopList.push(6);
+        linkedList_LoopSmallerThanNonLoopList.push(4);
+        linkedList_LoopSmallerThanNonLoopList.push(3);
+        linkedList_LoopSmallerThanNonLoopList.push(2);
+        linkedList_LoopSmallerThanNonLoopList.push(52);
+        linkedList_LoopSmallerThanNonLoopList.push(53);
+        linkedList_LoopSmallerThanNonLoopList.push(1);
+        linkedList_LoopSmallerThanNonLoopList.push(loopStart);
+        loopMerge.next = loopStart;
+
+        // Cant use it because it will cause JVM heap memory issue
+        //linkedList_LoopSmallerThanNonLoopList.printlinkedList_LoopSmallerThanNonLoopList("BEFORE REMOVING LOOP");
+        linkedList_LoopSmallerThanNonLoopList.removeLoop();
+        linkedList_LoopSmallerThanNonLoopList.printLinkedList("AFTER REMOVING LOOP");
+        //</editor-fold>
+
+    }
+
+    /**
+     * Method to crete linked list and call reverse methods
+     */
+    public static void runReverseMethods(){
+
+        LinkedList linkedList = new LinkedList(new Node(9));
+        linkedList.push(8);
+        linkedList.push(7);
+        linkedList.push(6);
+        linkedList.push(5);
+        linkedList.push(4);
+        linkedList.push(3);
+        linkedList.push(2);
+        linkedList.push(1);
+
+        int subsetSize = 3;
+
+//        linkedList.printLinkedList("Before REVERSE");
+//        linkedList.reverse_Iterative();
+//        linkedList.printLinkedList("After REVERSE");
+
+//        linkedList.printLinkedList("BEFORE ITERATIVE REVERSE BY SUBSET SIZE: "+subsetSize );
+//        linkedList.reverse_Iterative(subsetSize);
+//        linkedList.printLinkedList("AFTER ITERATIVE REVERSE BY SUBSET SIZE: "+subsetSize );
+
+        linkedList.printLinkedList("BEFORE RECURSIVE REVERSE BY SUBSET SIZE: "+subsetSize );
+        linkedList.reverse_Recursive(subsetSize);
+        linkedList.printLinkedList("AFTER RECURSIVE REVERSE BY SUBSET SIZE: "+subsetSize );
+
+    }
+
+    public static void runMergeSortSample(){
+
+        LinkedList linkedList = new LinkedList(new Node(9));
+        linkedList.push(8);
+        linkedList.push(7);
+        linkedList.push(6);
+        linkedList.push(5);
+        linkedList.push(4);
+        linkedList.push(3);
+        linkedList.push(2);
+        linkedList.push(1);
+
+        linkedList.printLinkedList("BEFORE MERGE SORT");
+        linkedList.mergeSort();
+    }
+
     /**
      * Print data in linked list from head to tail using simple loop
      */
@@ -181,6 +321,24 @@ public class LinkedList {
         newNode.next = head;
 
         head = newNode;
+
+    }
+
+    /**
+     * Pushes a new Node at front of the Linked List
+     * Time - O(1)
+     * @param node
+     */
+    public void push(Node node){
+
+        if(node!=null) {
+            node.next = head;
+            head = node;
+        }
+
+        else
+            LOGGER.info("Cannot push NULL node at head.");
+
 
     }
 
@@ -675,50 +833,6 @@ public class LinkedList {
 
     }
 
-    public static void runReverseMethods(){
-
-        LinkedList linkedList = new LinkedList(new Node(9));
-        linkedList.push(8);
-        linkedList.push(7);
-        linkedList.push(6);
-        linkedList.push(5);
-        linkedList.push(4);
-        linkedList.push(3);
-        linkedList.push(2);
-        linkedList.push(1);
-
-        int subsetSize = 3;
-
-//        linkedList.printLinkedList("Before REVERSE");
-//        linkedList.reverse_Iterative();
-//        linkedList.printLinkedList("After REVERSE");
-
-//        linkedList.printLinkedList("BEFORE ITERATIVE REVERSE BY SUBSET SIZE: "+subsetSize );
-//        linkedList.reverse_Iterative(subsetSize);
-//        linkedList.printLinkedList("AFTER ITERATIVE REVERSE BY SUBSET SIZE: "+subsetSize );
-
-        linkedList.printLinkedList("BEFORE RECURSIVE REVERSE BY SUBSET SIZE: "+subsetSize );
-        linkedList.reverse_Recursive(subsetSize);
-        linkedList.printLinkedList("AFTER RECURSIVE REVERSE BY SUBSET SIZE: "+subsetSize );
-
-    }
-
-    public static void runMergeSortSample(){
-
-        LinkedList linkedList = new LinkedList(new Node(9));
-        linkedList.push(8);
-        linkedList.push(7);
-        linkedList.push(6);
-        linkedList.push(5);
-        linkedList.push(4);
-        linkedList.push(3);
-        linkedList.push(2);
-        linkedList.push(1);
-
-        linkedList.printLinkedList("BEFORE MERGE SORT");
-        linkedList.mergeSort();
-    }
-
     /**
      * Sorts the current Linked List using Merge Sort
      *
@@ -907,6 +1021,92 @@ public class LinkedList {
 
         // Prev is the last element of original list, which is now the first element of reversed list;
         return prev;
+
+    }
+
+    /**
+     * Removes the loop from a linked list
+     */
+    private void removeLoop(){
+
+        Node nodeOnLoop = getANodeOnLoop();
+        if(nodeOnLoop==null) {
+            LOGGER.info("No loop found.");
+            return;
+        }
+
+        removeLoop(nodeOnLoop);
+
+        LOGGER.info("Node on loop: "+nodeOnLoop.data);
+
+    }
+
+    /**
+     * We have a node on loop. if we start pointer from that node and from any other node on linked list,
+     * we will reach the node which starts the loop in some unknown countable number of loops.
+     * @param nodeOnLoop
+     */
+    private void removeLoop(Node nodeOnLoop){
+
+        if(head==null) {
+            LOGGER.info("Cannot remove loop as Linked list is empty.");
+            return;
+        }
+
+        if(nodeOnLoop==null) {
+            LOGGER.info("Cannot remove loop as given node on loop is NULL.");
+            return;
+        }
+
+        Node node1 = head;
+        Node node2 = nodeOnLoop;
+
+        final boolean INFINITE_LOOP = true;
+
+        while (INFINITE_LOOP) {
+
+            if(node1.next == node2.next) {
+                LOGGER.info("Loop Starting at: "+node2.next.data);
+                node2.next = null;
+                return;
+            }
+            node1 = node1.next;
+            node2 = node2.next;
+
+        }
+
+    }
+
+    /**
+     *
+     * @return returns null if no loop, else a Node on loop
+     */
+    private Node getANodeOnLoop(){
+
+        if(head==null) {
+            LOGGER.info("Empty Linked List");
+            return null;
+        }
+
+        Node nodeOnLoop = null;
+
+        Node fastNode = head;
+        Node slowNode = head;
+
+        while(slowNode!=null && fastNode!=null && fastNode.next!=null) {
+
+            slowNode = slowNode.next;
+            fastNode = fastNode.next.next;
+
+            if(fastNode==slowNode) {
+                nodeOnLoop = slowNode;
+                break;
+            }
+
+        }
+
+
+        return nodeOnLoop;
 
     }
 
