@@ -25,6 +25,7 @@ public class LinkedList {
 
     }
 
+    // Linked list head
     Node head;
 
     public LinkedList(Node head) {
@@ -33,6 +34,20 @@ public class LinkedList {
     }
 
     public static void main(String args[]){
+
+
+        //sortedMerge(headNode, headNode2).printLinkedList("After SORTED MERGE - LIST");
+
+        //runMergeSortSample();
+
+        //runReverseMethods();
+
+    }
+
+    /**
+     * Invoke misc methods
+     */
+    private static void invokeMiscMethods(){
 
         // Creating a linked list
         Node fifthNode = new Node(10);
@@ -57,33 +72,25 @@ public class LinkedList {
         secondNode.next = thirdNode;
         */
 
-        //invokeInsertionMethods(headNode);
+        invokeInsertionMethods(headNode);
 
-        //invokeDeletionMethods(headNode);
+        invokeDeletionMethods(headNode);
 
         LinkedList linkedList = new LinkedList(headNode);
         LinkedList linkedList2 = new LinkedList(headNode2);
 
-//        Node node1 = secondNode;
-//        Node node2 = headNode;
-//        linkedList.printLinkedList("BEFORE SWAP "+node1.data+" and "+node2.data);
-//        linkedList.swapNodes(node1, node2);
-//        linkedList.printLinkedList("AFTER SWAP "+node1.data+" and "+node2.data);
+        Node node1 = secondNode;
+        Node node2 = headNode;
+        linkedList.printLinkedList("BEFORE SWAP "+node1.data+" and "+node2.data);
+        linkedList.swapNodes(node1, node2);
+        linkedList.printLinkedList("AFTER SWAP "+node1.data+" and "+node2.data);
 
-//        int position1 = 1;
-//        int position2 = 3;
+        int position1 = 1;
+        int position2 = 3;
 
-//        linkedList.printLinkedList("BEFORE SWAP "+position1+" and "+position2);
-//        linkedList.swapNodes(position1, position2);
-//        linkedList.printLinkedList("AFTER SWAP "+position1+" and "+position2);
-
-//        linkedList.printLinkedList("Before REVERSE");
-//        linkedList.reverse();
-//        linkedList.printLinkedList("After REVERSE");
-
-        //sortedMerge(headNode, headNode2).printLinkedList("After SORTED MERGE - LIST");
-
-        runMergeSortSample();
+        linkedList.printLinkedList("BEFORE SWAP "+position1+" and "+position2);
+        linkedList.swapNodes(position1, position2);
+        linkedList.printLinkedList("AFTER SWAP "+position1+" and "+position2);
 
     }
 
@@ -132,8 +139,6 @@ public class LinkedList {
 //
 //        LOGGER.info("Count of nodes in list: "+linkedList.getCount()+" [Recurive: "+linkedList.getCountRec(linkedList.head)+"]");
 
-
-
     }
 
     /**
@@ -152,6 +157,7 @@ public class LinkedList {
             strBuilder.append("NULL");
         } else {
             while(curr!=null) {
+                LOGGER.info("["+curr.data+"] --> ");
                 strBuilder.append("["+curr.data+"] --> ");
                 curr = curr.next;
                 if(curr==null)
@@ -535,7 +541,7 @@ public class LinkedList {
     /**
      * Reverse the linked list
      */
-    public void reverse() {
+    public void reverse_Iterative() {
 
         // Prev -> Curr -> Next
 
@@ -669,6 +675,34 @@ public class LinkedList {
 
     }
 
+    public static void runReverseMethods(){
+
+        LinkedList linkedList = new LinkedList(new Node(9));
+        linkedList.push(8);
+        linkedList.push(7);
+        linkedList.push(6);
+        linkedList.push(5);
+        linkedList.push(4);
+        linkedList.push(3);
+        linkedList.push(2);
+        linkedList.push(1);
+
+        int subsetSize = 3;
+
+//        linkedList.printLinkedList("Before REVERSE");
+//        linkedList.reverse_Iterative();
+//        linkedList.printLinkedList("After REVERSE");
+
+//        linkedList.printLinkedList("BEFORE ITERATIVE REVERSE BY SUBSET SIZE: "+subsetSize );
+//        linkedList.reverse_Iterative(subsetSize);
+//        linkedList.printLinkedList("AFTER ITERATIVE REVERSE BY SUBSET SIZE: "+subsetSize );
+
+        linkedList.printLinkedList("BEFORE RECURSIVE REVERSE BY SUBSET SIZE: "+subsetSize );
+        linkedList.reverse_Recursive(subsetSize);
+        linkedList.printLinkedList("AFTER RECURSIVE REVERSE BY SUBSET SIZE: "+subsetSize );
+
+    }
+
     public static void runMergeSortSample(){
 
         LinkedList linkedList = new LinkedList(new Node(9));
@@ -765,14 +799,114 @@ public class LinkedList {
 
     /**
      * Reverse subset of linked list with given subset size
+     *
+     * USES ITERATIVE METHOD
+     *
      * e.g.
-     * i/p - 1, 2, 3, 4, 5, 6, 7, 8, 9 with subset size 3
-     * o/p - 3, 2, 1, 6, 5, 4, 9, 8, 7
+     * i/p - 1, 2, 3,  4, 5, 6,  7, 8, 9 with subset size 3
+     * o/p - 3, 2, 1,  6, 5, 4,  9, 8, 7
+     *
      * @param subsetSize
      */
-    public void reverse(int subsetSize) {
+    public void reverse_Iterative(int subsetSize) {
 
+        if(subsetSize<1) {
+            LOGGER.info("Subset size is less than one - Reverse by subset not applicable");
+            return;
+        }
 
+        if(head==null) {
+            LOGGER.info("Empty linked list - Reverse by subset not applicable");
+            return;
+        }
+
+        Node curr = head;
+
+        // I/P: 1->2->3->4 -> 5->6
+        // O/P: 4->3->2->1 -> 6->5
+        Node newhead = null;
+        Node currNext = null;
+        Node currPrev = null;
+        while(curr!=null) {
+
+            LOGGER.info("Curr Data: "+curr.data);
+            Node subsetCurr = curr;
+            Node subsetPrev = subsetCurr;
+            Node subsetNext = null;
+            for(int i=0; i<subsetSize && subsetCurr!=null; i++) {
+
+                LOGGER.info("Subset Curr Data: "+subsetCurr.data);
+
+                subsetNext = subsetCurr.next;
+                subsetCurr.next = subsetPrev;
+                subsetPrev = subsetCurr;
+                subsetCurr = subsetNext;
+
+            }
+
+            if(newhead==null)
+                newhead = subsetPrev;
+
+            if(currPrev!=null)
+                currPrev.next = subsetPrev;
+
+            currPrev = curr;
+
+            curr.next = subsetCurr;
+            curr = curr.next;
+
+        }
+        head = newhead;
+
+    }
+
+    /**
+     * Reverse subset of linked list with given subset size
+     *
+     * USES RECURSIVE METHOD
+     *
+     * e.g.
+     * i/p - 1, 2, 3,  4, 5, 6,  7, 8, 9 with subset size 3
+     * o/p - 3, 2, 1,  6, 5, 4,  9, 8, 7
+     *
+     * @param subsetSize
+     */
+    public void reverse_Recursive(int subsetSize) {
+
+        head = reverse(head, subsetSize);
+
+    }
+
+    /**
+     * Reverse the given linked list by subsets of given size using recursion
+     * @param subsetHead
+     * @param subsetSize
+     * @return new Head of subset list
+     */
+    private Node reverse(Node subsetHead, int subsetSize) {
+
+        if(subsetHead==null || subsetSize<1)
+            return null;
+
+        Node curr = subsetHead;
+        Node next = null;
+        Node prev = null;
+
+        int count = 0;
+        while(curr!=null && count<subsetSize) {
+
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+            count++;
+
+        }
+
+        subsetHead.next = reverse(next, subsetSize);
+
+        // Prev is the last element of original list, which is now the first element of reversed list;
+        return prev;
 
     }
 
