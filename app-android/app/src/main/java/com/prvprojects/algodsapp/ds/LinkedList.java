@@ -1,6 +1,7 @@
 package com.prvprojects.algodsapp.ds;
 
 
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -42,7 +43,9 @@ public class LinkedList {
 
         //runReverseMethods();
 
-        runRemoveLoopMethods();
+        //runRemoveLoopMethods();
+
+        runNumberAdditionUsingLinkedList();
 
     }
 
@@ -143,6 +146,36 @@ public class LinkedList {
 
     }
 
+    /**
+     * 1. We request two numbers from user using keyboard/console.
+     * 2. We convert numbers to separate linked lists
+     * 3. We create new linked list containing sum of the two numbers
+     * 4. We print the sum as number
+     */
+    public static void runNumberAdditionUsingLinkedList(){
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Please enter an integer number. Waiting for input...");
+        int num1 = scanner.nextInt();
+
+        System.out.println("Please enter one more integer number. Waiting for input");
+        int num2 = scanner.nextInt();
+
+        LinkedList number1 = convertIntegerToLinkedList(num1);
+        LinkedList number2 = new LinkedList(convertIntegerToLinkedList_Recursively(num2));
+
+        number1.printLinkedList("First number "+num1+" as linked list:");
+        number2.printLinkedList("Second number "+num2+" as linked list:");
+
+        LinkedList sum = addIntegerNumbersUsingLinkedList(number1, number2);
+        sum.printLinkedList("Sum of numbers "+num1+" and "+num2+" represented as linked list:");
+
+        LOGGER.info("Using Linked Lists: "+num1+" + "+num2+" = "+convertLinkedListToInteger(sum));
+
+
+
+    }
 
     /**
      * Method to create linked list and call remove loop methods
@@ -297,7 +330,7 @@ public class LinkedList {
             strBuilder.append("NULL");
         } else {
             while(curr!=null) {
-                LOGGER.info("["+curr.data+"] --> ");
+                //LOGGER.info("["+curr.data+"] --> ");
                 strBuilder.append("["+curr.data+"] --> ");
                 curr = curr.next;
                 if(curr==null)
@@ -1109,5 +1142,167 @@ public class LinkedList {
         return nodeOnLoop;
 
     }
+
+    /**
+     * Converts linked list to number
+     * Linked List [7 -> 3 -> 2 -> 6 -> 1 -> NULL] is converted to 16237
+     * @param numberList
+     * @return
+     */
+    private static int convertLinkedListToInteger(LinkedList numberList){
+
+        if(numberList==null)
+            throw new RuntimeException("Empty linked list cannot be converted to integer");
+
+        Node head = numberList.head;
+
+        if(head==null)
+            throw new RuntimeException("Given linked list has null node");
+
+        int number = 0;
+        int digitPlace = 0;
+
+        while(head!=null) {
+
+            number += head.data * Math.pow(10, digitPlace);
+            head = head.next;
+            digitPlace++;
+
+        }
+
+        return number;
+
+    }
+
+    /**
+     * NOTE: DOES NOT WORK ON 0
+     * The number 12345 becomes (HEAD) 5 -> 4 -> 3 -> 2 -> 1 -> NULL
+     * @param number
+     * @return returns head of linkedlist representing given number
+     */
+    private static Node convertIntegerToLinkedList_Recursively(int number) {
+
+        if(number==0)
+            return null;
+
+        // 1234
+        int digit = number%10;
+        number = number/10;
+
+        return new Node(digit, convertIntegerToLinkedList_Recursively(number));
+
+    }
+
+
+    /**
+     * Add two positive integer numbers represented by two linked lists
+     * @param linkedList1
+     * @param linkedList2
+     * @return linked list representing sum of two positive integers represented by given linked list
+     */
+    private static LinkedList addIntegerNumbersUsingLinkedList(LinkedList linkedList1, LinkedList linkedList2){
+
+        if(linkedList1==null)
+            return linkedList2;
+
+        if(linkedList2==null)
+            return linkedList1;
+
+
+        Node head1 = linkedList1.head;
+        Node head2 = linkedList2.head;
+
+        if(head1==null)
+            return linkedList2;
+
+        if(head2==null)
+            return linkedList1;
+
+        Node curr1 = head1;
+        Node curr2 = head2;
+        Node sumHead = null;
+        Node currSumNode = null;
+        Node prevSumNode = null;
+        int prevSumCarry = 0;
+
+        while(!(curr1==null && curr2==null)) {
+
+            int currSummedDigit = prevSumCarry;
+
+            if(curr1!=null)
+                currSummedDigit += curr1.data;
+
+            if(curr2!=null)
+                currSummedDigit += curr2.data;
+
+            prevSumCarry = currSummedDigit>=10?currSummedDigit / 10 : 0;
+
+            currSummedDigit %= 10;
+
+            currSumNode = new Node(currSummedDigit);
+
+            if(prevSumNode!=null)
+                prevSumNode.next = currSumNode;
+            if(sumHead==null)
+                sumHead = currSumNode;
+
+            prevSumNode = currSumNode;
+
+            if(curr1!=null)
+                curr1 = curr1.next;
+
+            if(curr2!=null)
+                curr2 = curr2.next;
+
+        }
+
+        // Carry shall be always less than equal to 1. E.g. 99 + 99 = 198
+        if(prevSumCarry>0) {
+            currSumNode = new Node(prevSumCarry);
+            prevSumNode.next = currSumNode;
+        }
+
+        return new LinkedList(sumHead);
+
+    }
+
+    /**
+     * The number 12345 becomes (HEAD) 5 -> 4 -> 3 -> 2 -> 1 -> NULL
+     * @param number
+     * @return returns LinkedList representing given number
+     */
+    private static LinkedList convertIntegerToLinkedList(int number){
+
+        Node head = null;
+
+        if(number==0)
+            head = new Node(number);
+        else {
+            Node curr = head;
+            Node prev;
+            for(int num = number; num>0; num = num/10) {
+
+                // Take the least value digit/ leftmost digit form number
+                int digit = num % 10;
+
+                prev = curr;
+
+                curr = new Node(digit);
+
+                if(prev!=null)
+                    prev.next = curr;
+                if(head==null) {
+                    head = curr;
+                }
+
+            }
+        }
+
+
+
+        return new LinkedList(head);
+
+    }
+    
 
 }
