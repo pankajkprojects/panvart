@@ -45,7 +45,24 @@ public class LinkedList {
 
         //runRemoveLoopMethods();
 
-        runNumberAdditionUsingLinkedList();
+        //runNumberAdditionUsingLinkedList();
+
+        runRotationExample();
+
+    }
+
+    /**
+     * Method to run a sample on rotation of linked list
+     */
+    public static void runRotationExample(){
+
+        LinkedList linkedList = convertIntegerToLinkedList(123456789);
+        linkedList.printLinkedList("Original Linked List:");
+
+        int k = 3;
+        linkedList.rotateAntiClockwise_nonOptimized(k);
+
+        linkedList.printLinkedList("Rotating Linked List by k="+k+" nodes.");
 
     }
 
@@ -1301,6 +1318,46 @@ public class LinkedList {
 
 
         return new LinkedList(head);
+
+    }
+
+    /**
+     * Rotate linked list by k nodes in anti clockwise direction
+     * @param k
+     */
+    public void rotateAntiClockwise_nonOptimized(int k){
+
+        int numNodes = this.getCount();
+
+        if(k>numNodes) {
+            LOGGER.info("Cannot rotate linked list by a value greater than the number of nodes in the list");
+            return;
+        }
+
+        if(k<0) {
+            LOGGER.info("Rotating a linked list by 0 nodes not meaning ful.");
+            return;
+        }
+
+        Node prev = head;
+        Node prevPrev = null;
+        for (int i=numNodes-1; i>k; i--) {
+
+            if(prev==null) {
+                LOGGER.info("Linked list length is shorter than rotation constant");
+                return;
+            }
+
+            prevPrev = prev;
+            prev = prev.next;
+
+        }
+
+        Node newhead = prev;
+        prev.next = head;
+        head = newhead;
+        if(prevPrev!=null)
+            prevPrev.next = null;
 
     }
     
